@@ -22,8 +22,9 @@ namespace tetris_wpf
 
         private void ShowSettings(object sender, EventArgs e)
         {
-            // Implement settings logic here
-            MessageBox.Show("Settings not implemented yet!");
+            SettingsWindow settingsWindow = new SettingsWindow();
+            settingsWindow.Closed += (s, args) => this.Show(); // Show main window when game window closes
+            settingsWindow.Show();
         }
     }
 }

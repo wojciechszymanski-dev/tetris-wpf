@@ -17,10 +17,15 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="10"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="8*"/>
             <RowDefinition Height="10"/>
         </Grid.RowDefinitions>
 
+        <DockPanel Grid.Column="1" Grid.Row="1">
+        <Label x:Name="timeLabel" Content="0"/>
+        </DockPanel>
+
         <!-- Game content will go here -->
-        <Canvas x:Name="gameCanvas" Grid.Column="1" Grid.Row="1" Background="#eee"/>
+        <Canvas x:Name="gameCanvas" Grid.Column="1" Grid.Row="2" Background="#eee"/>
     </Grid>
 </Window>

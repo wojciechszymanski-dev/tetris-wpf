@@ -20,3 +20,5 @@ C:\Users\Adrian\source\repos\tetris-wpf\obj\Debug\net8.0-windows\tetris-wpf.genr
 C:\Users\Adrian\source\repos\tetris-wpf\obj\Debug\net8.0-windows\ref\tetris-wpf.dll
 C:\Users\Adrian\source\repos\tetris-wpf\obj\Debug\net8.0-windows\GameWindow.g.cs
 C:\Users\Adrian\source\repos\tetris-wpf\obj\Debug\net8.0-windows\GameWindow.baml
+C:\Users\Adrian\source\repos\tetris-wpf\obj\Debug\net8.0-windows\SettingsWindow.g.cs
+C:\Users\Adrian\source\repos\tetris-wpf\obj\Debug\net8.0-windows\SettingsWindow.baml
