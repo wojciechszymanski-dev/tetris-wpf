@@ -18,9 +18,11 @@ namespace tetris_wpf
         private bool[,] gameState;
         private GameBlock currentBlock;
         private DispatcherTimer gameTimer;
+        private DispatcherTimer timeUpdateTimer;
         private int score = 0;
         private string nickname;
         private DateTime gameStartTime;
+        private TimeSpan elapsedTime;
 
         public GameWindow()
         {
@@ -49,6 +51,7 @@ namespace tetris_wpf
             InitializeGameGrid();
             gameState = new bool[rows, cols];
             SpawnNewBlock();
+            elapsedTime = TimeSpan.Zero;
 
             gameTimer = new DispatcherTimer
             {
@@ -57,8 +60,29 @@ namespace tetris_wpf
             gameTimer.Tick += GameTimer_Tick;
             gameTimer.Start();
 
+            timeUpdateTimer = new DispatcherTimer
+            {
+                Interval = TimeSpan.FromSeconds(1)
+            };
+            timeUpdateTimer.Tick += TimeUpdateTimer_Tick;
+            timeUpdateTimer.Start();
+
             this.KeyDown += GameWindow_KeyDown;
             this.Focus();
+
+            // Initialize time display
+            UpdateTimeDisplay();
+        }
+
+        private void TimeUpdateTimer_Tick(object sender, EventArgs e)
+        {
+            elapsedTime = elapsedTime.Add(TimeSpan.FromSeconds(1));
+            UpdateTimeDisplay();
+        }
+
+        private void UpdateTimeDisplay()
+        {
+            timeLabel.Content = $"{(int)elapsedTime.TotalMinutes}:{elapsedTime.Seconds:D2}";
         }
 
         private void InitializeGameGrid()
@@ -120,9 +144,9 @@ namespace tetris_wpf
                     currentBlock.TryRotate(gameState, rows, cols);
                     break;
                 case Key.Space when currentBlock.CanMoveDown(gameState, rows, cols):
-                    for(int i = currentBlock.X; i < rows - 1; i++)
+                    for (int i = currentBlock.X; i < rows; i++)
                     {
-                        if(currentBlock.CanMoveDown(gameState, rows, cols))
+                        if (currentBlock.CanMoveDown(gameState, rows, cols))
                         {
                             currentBlock.Y++;
                         }
@@ -215,7 +239,7 @@ namespace tetris_wpf
                         }
                     }
                     score += 100;
-                    r++; // Check the same row again
+                    r++; 
                 }
             }
         }
@@ -223,26 +247,28 @@ namespace tetris_wpf
         private void GameOver()
         {
             gameTimer.Stop();
+            timeUpdateTimer.Stop(); 
             SaveScore();
-            MessageBox.Show($"Game Over!\nScore: {score}", "Game Over", MessageBoxButton.OK);
+            MessageBox.Show($"Game Over!\nScore: {score}\nTime: {timeLabel.Content}", "Game Over", MessageBoxButton.OK);
             Close();
         }
 
         private void GameWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             SaveScore();
+            if (gameTimer != null) gameTimer.Stop();
+            if (timeUpdateTimer != null) timeUpdateTimer.Stop();
         }
 
         private void SaveScore()
         {
             try
             {
-                // Save to executable directory
                 string exePath = AppDomain.CurrentDomain.BaseDirectory;
                 string filePath = System.IO.Path.Combine(exePath, "game_logs.txt");
                 using (var writer = File.AppendText(filePath))
                 {
-                    writer.WriteLine($"{nickname},{Environment.OSVersion},{DateTime.Now:yyyy-MM-dd HH:mm:ss},{score}");
+                    writer.WriteLine($"{nickname},{Environment.OSVersion},{DateTime.Now:yyyy-MM-dd HH:mm:ss},{score},{timeLabel.Content}");
                 }
             }
             catch (Exception ex)
@@ -251,6 +277,7 @@ namespace tetris_wpf
             }
         }
     }
+
 
     public class InputDialog : Window
     {

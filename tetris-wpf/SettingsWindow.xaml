@@ -6,6 +6,33 @@
         xmlns:local="clr-namespace:tetris_wpf"
         mc:Ignorable="d"
         Title="SettingsWindow" Height="350" Width="330">
+    <Window.Resources>
+        <Style x:Key="RadioButtonAsButton" TargetType="RadioButton">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="RadioButton">
+                        <Border x:Name="border" 
+                                BorderThickness="1"
+                                BorderBrush="Gray"
+                                Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center" 
+                                            VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsChecked" Value="False">
+                                <Setter TargetName="border" Property="Background" Value="Gray"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Height" Value="45"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="15"/>
+        </Style>
+    </Window.Resources>
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="30"/>
@@ -25,24 +52,27 @@
                FontSize="25" FontWeight="Bold"
                HorizontalContentAlignment="Center"
                VerticalContentAlignment="Center"/>
-        
+
         <Label Grid.Column="1" Grid.Row="2" 
                Content="Difficulty level:" 
                FontSize="15" FontWeight="Bold"/>
-        
+
         <StackPanel Grid.Column="1" Grid.Row="3">
-            <Button Height="45" Content="Easy" 
-                    Background="Lime" Foreground="White" 
-                    FontWeight="Bold" FontSize="15"/>
-
-            <Button Height="45" Content="Medium" 
-                    Background="Orange" Foreground="White" 
-                    FontWeight="Bold" FontSize="15"
-                    Margin="0, 10"/>
-
-            <Button Height="45" Content="Hard" 
-                    Background="Red" Foreground="White" 
-                    FontWeight="Bold" FontSize="15"/>
+            <RadioButton Content="Easy" 
+                        Style="{StaticResource RadioButtonAsButton}"
+                        Background="Lime"
+                        Margin="0,0,0,10"
+                        GroupName="Difficulty"
+                        IsChecked="True"/>
+            <RadioButton Content="Medium" 
+                        Style="{StaticResource RadioButtonAsButton}"
+                        Background="Orange"
+                        Margin="0,0,0,10"
+                        GroupName="Difficulty"/>
+            <RadioButton Content="Hard" 
+                        Style="{StaticResource RadioButtonAsButton}"
+                        Background="Red"
+                        GroupName="Difficulty"/>
         </StackPanel>
     </Grid>
 </Window>
