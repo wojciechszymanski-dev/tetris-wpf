@@ -1,27 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace tetris_wpf
 {
-    /// <summary>
-    /// Interaction logic for SettingsWindow.xaml
-    /// </summary>
     public partial class SettingsWindow : Window
     {
+        public enum Difficulty { Easy, Medium, Hard }
+        public Difficulty SelectedDifficulty { get; private set; } = Difficulty.Easy;
+
         public SettingsWindow()
         {
             InitializeComponent();
+        }
+
+        private void RadioButton_Checked(object sender, RoutedEventArgs e)
+        {
+            if (sender is RadioButton rb)
+            {
+                SelectedDifficulty = rb.Content.ToString() switch
+                {
+                    "Easy" => Difficulty.Easy,
+                    "Medium" => Difficulty.Medium,
+                    "Hard" => Difficulty.Hard,
+                    _ => Difficulty.Easy
+                };
+            }
         }
     }
 }

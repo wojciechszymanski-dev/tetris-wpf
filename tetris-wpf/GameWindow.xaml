@@ -16,16 +16,18 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="10"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="50"/>
             <RowDefinition Height="8*"/>
             <RowDefinition Height="10"/>
         </Grid.RowDefinitions>
-
-        <DockPanel Grid.Column="1" Grid.Row="1">
-            <Label x:Name="timeLabel" Content="0:00" />
-        </DockPanel>
-
-        <!-- Game content will go here -->
+        <Grid Grid.Column="1" Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="100"/>
+            </Grid.ColumnDefinitions>
+            <Label x:Name="timeLabel" Content="0:00" VerticalAlignment="Center"/>
+            <Canvas x:Name="nextBlockCanvas" Grid.Row="2" Grid.Column="1" Width="40" Height="40" Margin="0"/>
+        </Grid>
         <Canvas x:Name="gameCanvas" Grid.Column="1" Grid.Row="2" Background="#eee"/>
     </Grid>
 </Window>

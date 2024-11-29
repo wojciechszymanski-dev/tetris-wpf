@@ -32,7 +32,6 @@
             <Setter Property="FontSize" Value="15"/>
         </Style>
     </Window.Resources>
-
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="30"/>
@@ -46,30 +45,30 @@
             <RowDefinition Height="8*"/>
             <RowDefinition Height="10"/>
         </Grid.RowDefinitions>
-
         <Label Grid.Column="1" Grid.Row="1" 
                Content="Tetris Settings"
                FontSize="25" FontWeight="Bold"
                HorizontalContentAlignment="Center"
                VerticalContentAlignment="Center"/>
-
         <Label Grid.Column="1" Grid.Row="2" 
                Content="Difficulty level:" 
                FontSize="15" FontWeight="Bold"/>
-
         <StackPanel Grid.Column="1" Grid.Row="3">
             <RadioButton Content="Easy" 
+                        Checked="RadioButton_Checked"
                         Style="{StaticResource RadioButtonAsButton}"
                         Background="Lime"
                         Margin="0,0,0,10"
                         GroupName="Difficulty"
                         IsChecked="True"/>
             <RadioButton Content="Medium" 
+                        Checked="RadioButton_Checked"
                         Style="{StaticResource RadioButtonAsButton}"
                         Background="Orange"
                         Margin="0,0,0,10"
                         GroupName="Difficulty"/>
             <RadioButton Content="Hard" 
+                        Checked="RadioButton_Checked"
                         Style="{StaticResource RadioButtonAsButton}"
                         Background="Red"
                         GroupName="Difficulty"/>

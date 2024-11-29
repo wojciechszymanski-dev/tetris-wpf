@@ -24,6 +24,7 @@
         <StackPanel Grid.Row="2" Grid.Column="1" VerticalAlignment="Center" Margin="0,0,0,50">
             <Button x:Name="startButton"  Content="Play" FontSize="18" FontWeight="Bold" Width="200" Height="40" Foreground="#eee" Background="#333" Margin="5"/>
             <Button x:Name="settingsButton" Content="Settings" FontSize="18" FontWeight="Bold" Width="200" Height="40" Foreground="#eee" Background="#333" Margin="5"/>
+            <Button x:Name="LeaderboardButton" Content="Leaderboard" FontSize="18" FontWeight="Bold" Width="200" Height="40" Foreground="#eee" Background="#333" Margin="5"/>
         </StackPanel>
     </Grid>
 </Window>

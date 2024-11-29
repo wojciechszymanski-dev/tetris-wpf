@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NET;NET8_0;NETCOREAPP
 C:\Users\Adrian\source\repos\tetris-wpf\App.xaml
-31162566681
+41443602200
 
-8-267519833
+9-243783676
 198-1431420039
-GameWindow.xaml;MainWindow.xaml;SettingsWindow.xaml;
+GameWindow.xaml;LeaderboardWindow.xaml;MainWindow.xaml;SettingsWindow.xaml;
 
 False
 

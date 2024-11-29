@@ -14,19 +14,31 @@ namespace tetris_wpf
         private readonly int rows = 15;
         private readonly int cols = 10;
         private readonly int cellSize = 30;
+        private readonly double gameSpeed;
         private Rectangle[,] grid;
         private bool[,] gameState;
         private GameBlock currentBlock;
+        private GameBlock nextBlock;
         private DispatcherTimer gameTimer;
         private DispatcherTimer timeUpdateTimer;
         private int score = 0;
         private string nickname;
         private DateTime gameStartTime;
         private TimeSpan elapsedTime;
+        private bool scoreHasBeenSaved = false;
+        private readonly SettingsWindow.Difficulty currentDifficulty;
 
-        public GameWindow()
+        public GameWindow(SettingsWindow.Difficulty difficulty)
         {
             InitializeComponent();
+            currentDifficulty = difficulty;  
+            gameSpeed = difficulty switch
+            {
+                SettingsWindow.Difficulty.Easy => 500,
+                SettingsWindow.Difficulty.Medium => 250,
+                SettingsWindow.Difficulty.Hard => 100,
+                _ => 500
+            };
             this.Closing += GameWindow_Closing;
             GetNickname();
             InitializeGame();
@@ -37,11 +49,11 @@ namespace tetris_wpf
             var dialog = new InputDialog("Enter your nickname:");
             if (dialog.ShowDialog() == true)
             {
-                nickname = dialog.Answer;
+                nickname = string.IsNullOrWhiteSpace(dialog.Answer) ? "Anon" : dialog.Answer;
             }
             else
             {
-                nickname = "Anonymous";
+                nickname = "Anon";
             }
             gameStartTime = DateTime.Now;
         }
@@ -55,7 +67,7 @@ namespace tetris_wpf
 
             gameTimer = new DispatcherTimer
             {
-                Interval = TimeSpan.FromMilliseconds(500)
+                Interval = TimeSpan.FromMilliseconds(gameSpeed)
             };
             gameTimer.Tick += GameTimer_Tick;
             gameTimer.Start();
@@ -70,7 +82,6 @@ namespace tetris_wpf
             this.KeyDown += GameWindow_KeyDown;
             this.Focus();
 
-            // Initialize time display
             UpdateTimeDisplay();
         }
 
@@ -158,12 +169,51 @@ namespace tetris_wpf
 
         private void SpawnNewBlock()
         {
-            currentBlock = new GameBlock
+            if (nextBlock == null)
             {
-                X = cols / 2 - 1,
-                Y = 0
-            };
+                nextBlock = new GameBlock();
+            }
+
+            currentBlock = nextBlock;
+            currentBlock.X = cols / 2 - 1;
+            currentBlock.Y = 0;
+
+            nextBlock = new GameBlock();
             UpdateDisplay();
+            UpdateNextBlockPreview();
+        }
+
+        private void UpdateNextBlockPreview()
+        {
+            // Clear the preview canvas
+            nextBlockCanvas.Children.Clear();
+
+            // Calculate center position for the piece
+            double cellSize = 15;
+            double offsetX = (nextBlockCanvas.Width - (nextBlock.Shape[0].Length * cellSize)) / 2;
+            double offsetY = (nextBlockCanvas.Height - (nextBlock.Shape.Length * cellSize)) / 2;
+
+            // Draw only the blocks that make up the piece
+            for (int r = 0; r < nextBlock.Shape.Length; r++)
+            {
+                for (int c = 0; c < nextBlock.Shape[r].Length; c++)
+                {
+                    if (nextBlock.Shape[r][c] == 1)
+                    {
+                        var rectangle = new Rectangle
+                        {
+                            Width = cellSize,
+                            Height = cellSize,
+                            Fill = nextBlock.Color,
+                            Stroke = Brushes.Black,
+                            StrokeThickness = 1
+                        };
+                        Canvas.SetTop(rectangle, offsetY + (r * cellSize));
+                        Canvas.SetLeft(rectangle, offsetX + (c * cellSize));
+                        nextBlockCanvas.Children.Add(rectangle);
+                    }
+                }
+            }
         }
 
         private void UpdateDisplay()
@@ -239,7 +289,7 @@ namespace tetris_wpf
                         }
                     }
                     score += 100;
-                    r++; 
+                    r++;
                 }
             }
         }
@@ -247,7 +297,7 @@ namespace tetris_wpf
         private void GameOver()
         {
             gameTimer.Stop();
-            timeUpdateTimer.Stop(); 
+            timeUpdateTimer.Stop();
             SaveScore();
             MessageBox.Show($"Game Over!\nScore: {score}\nTime: {timeLabel.Content}", "Game Over", MessageBoxButton.OK);
             Close();
@@ -255,21 +305,42 @@ namespace tetris_wpf
 
         private void GameWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            SaveScore();
+            if (!scoreHasBeenSaved)
+            {
+                SaveScore();
+            }
             if (gameTimer != null) gameTimer.Stop();
             if (timeUpdateTimer != null) timeUpdateTimer.Stop();
         }
 
         private void SaveScore()
         {
+            if (scoreHasBeenSaved) return;
+
             try
             {
-                string exePath = AppDomain.CurrentDomain.BaseDirectory;
-                string filePath = System.IO.Path.Combine(exePath, "game_logs.txt");
-                using (var writer = File.AppendText(filePath))
+                // Set default name if empty
+                if (string.IsNullOrWhiteSpace(nickname))
                 {
-                    writer.WriteLine($"{nickname},{Environment.OSVersion},{DateTime.Now:yyyy-MM-dd HH:mm:ss},{score},{timeLabel.Content}");
+                    nickname = "Anon";
                 }
+
+                // Get the execution directory
+                string exeDirectory = AppDomain.CurrentDomain.BaseDirectory;
+
+                // Navigate up to reach the project root
+                string projectRoot = System.IO.Path.GetFullPath(System.IO.Path.Combine(exeDirectory, "../../.."));
+
+                string resourcesDirectory = System.IO.Path.Combine(projectRoot, "Resources");
+                if (!Directory.Exists(resourcesDirectory))
+                {
+                    Directory.CreateDirectory(resourcesDirectory);
+                }
+
+                string filePath = System.IO.Path.Combine(resourcesDirectory, "game_logs.txt");
+                string scoreData = $"{nickname} | score: {score} | {currentDifficulty} | {DateTime.Now:yyyy-MM-dd HH:mm:ss}";
+                File.AppendAllText(filePath, scoreData + Environment.NewLine);
+                scoreHasBeenSaved = true;
             }
             catch (Exception ex)
             {
@@ -277,7 +348,6 @@ namespace tetris_wpf
             }
         }
     }
-
 
     public class InputDialog : Window
     {
