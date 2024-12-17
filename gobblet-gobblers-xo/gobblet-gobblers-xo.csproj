@@ -1,0 +1,80 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net9.0-windows</TargetFramework>
+    <RootNamespace>gobblet_gobblers_xo</RootNamespace>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="farmer-figure-red.png" />
+    <None Remove="Resources\farmer-figure-2-red.png" />
+    <None Remove="Resources\farmer-figure-blue.png" />
+    <None Remove="Resources\farmer-figure-red-2.png" />
+    <None Remove="Resources\farmer-figure-red.png" />
+    <None Remove="Resources\gobblet-gobblers-board.jpg" />
+    <None Remove="Resources\horseman-figure-blue.png" />
+    <None Remove="Resources\horseman-figure-red.png" />
+    <None Remove="Resources\king-figure-blue.png" />
+    <None Remove="Resources\king-figure-red.png" />
+    <None Remove="Resources\knight-figure-blue.png" />
+    <None Remove="Resources\knight-figure-red.png" />
+    <None Remove="Resources\pozeracze-animated-text.gif" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="farmer-figure-red.png" />
+    <Resource Include="Resources\farmer-figure-2-red.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\farmer-figure-blue.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\pozeracze-animated-text.gif">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\gobblet-gobblers-board.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\horseman-figure-blue.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\horseman-figure-red.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\king-figure-blue.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\king-figure-red.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\knight-figure-blue.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Resources\knight-figure-red.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Properties\Settings.Designer.cs">
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,180 @@
+﻿<Window x:Class="gobblet_gobblers_xo.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Gobblet Gobblers - Medieval Edition" 
+        Height="800" 
+        Width="1200"
+        WindowStartupLocation="CenterScreen"
+        WindowState="Maximized">
+
+    <Window.Resources>
+        <!-- Medieval Button Style -->
+        <Style x:Key="MedievalButton" TargetType="Button">
+            <Setter Property="Background" Value="#8B4513"/>
+            <Setter Property="Foreground" Value="#FFD700"/>
+            <Setter Property="FontFamily" Value="Palatino Linotype"/>
+            <Setter Property="FontSize" Value="28"/>
+            <Setter Property="Padding" Value="30,15"/>
+            <Setter Property="Margin" Value="15"/>
+            <Setter Property="Width" Value="300"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid>
+                            <!-- Outer decorative border -->
+                            <Border Background="Transparent"
+                                    BorderBrush="#8B4513"
+                                    BorderThickness="4"
+                                    CornerRadius="15"
+                                    Margin="-8">
+                                <!-- Inner button -->
+                                <Border Background="{TemplateBinding Background}"
+                                        BorderBrush="#4A2410"
+                                        BorderThickness="3"
+                                        CornerRadius="10"
+                                        Margin="4">
+                                    <ContentPresenter HorizontalAlignment="Center" 
+                                                    VerticalAlignment="Center"/>
+                                </Border>
+                            </Border>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#6B3410"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Background" Value="#4A2410"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Color="#2C1810" Offset="0"/>
+                <GradientStop Color="#462B1F" Offset="1"/>
+            </LinearGradientBrush>
+        </Grid.Background>
+
+        <!-- Decorative Border -->
+        <Border Margin="40"
+                BorderThickness="8,8,8,8"
+                CornerRadius="20">
+            <Border.BorderBrush>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                    <GradientStop Color="#8B4513" Offset="0"/>
+                    <GradientStop Color="#6B3410" Offset="1"/>
+                </LinearGradientBrush>
+            </Border.BorderBrush>
+            <Border.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                    <GradientStop Color="#1A0F0A" Offset="0"/>
+                    <GradientStop Color="#2C1810" Offset="1"/>
+                </LinearGradientBrush>
+            </Border.Background>
+
+            <!-- Main Content -->
+            <Grid>
+                <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <!-- Title with decorative lines -->
+                    <StackPanel Margin="0,0,0,60">
+                        <TextBlock Text="GOBBLET"
+                                 FontFamily="Old English Text MT"
+                                 FontSize="92"
+                                 Foreground="#FFD700"
+                                 HorizontalAlignment="Center"/>
+
+                        <TextBlock Text="GOBBLERS"
+                                 FontFamily="Old English Text MT"
+                                 FontSize="72"
+                                 Foreground="#FFD700"
+                                 HorizontalAlignment="Center"
+                                 Margin="0,-20,0,0"/>
+
+                        <!-- Decorative line -->
+                        <Path Stroke="#8B4513" 
+                              StrokeThickness="3" 
+                              Margin="0,20">
+                            <Path.Data>
+                                <PathGeometry>
+                                    <PathFigure StartPoint="0,0">
+                                        <LineSegment Point="400,0"/>
+                                    </PathFigure>
+                                </PathGeometry>
+                            </Path.Data>
+                        </Path>
+                    </StackPanel>
+
+                    <!-- Game figures preview -->
+                    <StackPanel Orientation="Horizontal" 
+                              HorizontalAlignment="Center" 
+                              Margin="0,0,0,40">
+                        <Image Source="Resources/king-figure-blue.png" Width="60" Height="60" Margin="10"/>
+                        <Image Source="Resources/knight-figure-red.png" Width="60" Height="60" Margin="10"/>
+                        <Image Source="Resources/horseman-figure-blue.png" Width="60" Height="60" Margin="10"/>
+                        <Image Source="/farmer-figure-red.png" Width="60" Height="60" Margin="10"/>
+                    </StackPanel>
+
+                    <!-- Menu Buttons -->
+                    <Button Content="Start Game" 
+                            Style="{StaticResource MedievalButton}"
+                            Click="StartGame_Click"/>
+
+                    <Button Content="Settings" 
+                            Style="{StaticResource MedievalButton}"
+                            Click="Settings_Click"/>
+
+                    <Button Content="Exit" 
+                            Style="{StaticResource MedievalButton}"
+                            Click="Exit_Click"/>
+
+                    <!-- Bottom decorative line -->
+                    <Path Stroke="#8B4513" 
+                          StrokeThickness="3" 
+                          Margin="0,40,0,0">
+                        <Path.Data>
+                            <PathGeometry>
+                                <PathFigure StartPoint="0,0">
+                                    <LineSegment Point="400,0"/>
+                                </PathFigure>
+                            </PathGeometry>
+                        </Path.Data>
+                    </Path>
+                </StackPanel>
+
+                <!-- Corner decorations -->
+                <Path Data="M 0,0 L 40,0 L 40,40 L 0,40 Z" 
+                      Fill="#8B4513" 
+                      Opacity="0.6"
+                      VerticalAlignment="Top" 
+                      HorizontalAlignment="Left" 
+                      Margin="20"/>
+
+                <Path Data="M 0,0 L 40,0 L 40,40 L 0,40 Z" 
+                      Fill="#8B4513" 
+                      Opacity="0.6"
+                      VerticalAlignment="Top" 
+                      HorizontalAlignment="Right" 
+                      Margin="20"/>
+
+                <Path Data="M 0,0 L 40,0 L 40,40 L 0,40 Z" 
+                      Fill="#8B4513" 
+                      Opacity="0.6"
+                      VerticalAlignment="Bottom" 
+                      HorizontalAlignment="Left" 
+                      Margin="20"/>
+
+                <Path Data="M 0,0 L 40,0 L 40,40 L 0,40 Z" 
+                      Fill="#8B4513" 
+                      Opacity="0.6"
+                      VerticalAlignment="Bottom" 
+                      HorizontalAlignment="Right" 
+                      Margin="20"/>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

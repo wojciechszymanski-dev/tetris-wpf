@@ -1,0 +1,173 @@
+﻿<Window x:Class="gobblet_gobblers_xo.SettingsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Settings - Gobblet Gobblers" 
+        Height="700" 
+        Width="900"
+        WindowStartupLocation="CenterScreen">
+
+    <Window.Resources>
+        <!-- Reusing the medieval button style -->
+        <Style x:Key="MedievalButton" TargetType="Button">
+            <Setter Property="Background" Value="#8B4513"/>
+            <Setter Property="Foreground" Value="#FFD700"/>
+            <Setter Property="FontFamily" Value="Palatino Linotype"/>
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="Padding" Value="20,10"/>
+            <Setter Property="Margin" Value="10"/>
+            <Setter Property="Width" Value="180"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                                BorderBrush="#4A2410"
+                                BorderThickness="3"
+                                CornerRadius="10">
+                            <ContentPresenter HorizontalAlignment="Center" 
+                                            VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#6B3410"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Background" Value="#4A2410"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <!-- Radio Button Style -->
+        <Style x:Key="MedievalRadioButton" TargetType="RadioButton">
+            <Setter Property="Foreground" Value="#FFD700"/>
+            <Setter Property="FontFamily" Value="Palatino Linotype"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="Margin" Value="10,5"/>
+        </Style>
+
+        <!-- TextBlock Style -->
+        <Style x:Key="MedievalText" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="#FFD700"/>
+            <Setter Property="FontFamily" Value="Palatino Linotype"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Margin" Value="5"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.Background>
+            <ImageBrush ImageSource="Resources/gobblet-gobblers-board.jpg" 
+                        Opacity="0.3" 
+                        Stretch="UniformToFill"/>
+        </Grid.Background>
+
+        <Border Background="#80000000" 
+                Margin="20"
+                CornerRadius="20"
+                Padding="30">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <!-- Title -->
+                <TextBlock Text="Game Settings"
+                           FontFamily="Old English Text MT"
+                           FontSize="40"
+                           Foreground="#FFD700"
+                           HorizontalAlignment="Center"
+                           Margin="0,0,0,30"/>
+
+                <!-- Settings Content -->
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Board Size Selection -->
+                    <StackPanel Grid.Column="0" Margin="20">
+                        <TextBlock Text="Choose Board Size"
+                                 FontFamily="Old English Text MT"
+                                 FontSize="24"
+                                 Foreground="#FFD700"
+                                 Margin="0,0,0,20"/>
+
+                        <RadioButton Content="3 x 3 Board" 
+                                   Style="{StaticResource MedievalRadioButton}"
+                                   GroupName="BoardSize"
+                                   Checked="BoardSize_Checked"
+                                   Tag="3"/>
+
+                        <RadioButton Content="5 x 5 Board" 
+                                   Style="{StaticResource MedievalRadioButton}"
+                                   GroupName="BoardSize"
+                                   Checked="BoardSize_Checked"
+                                   Tag="5"/>
+
+                        <RadioButton Content="10 x 10 Board" 
+                                   Style="{StaticResource MedievalRadioButton}"
+                                   GroupName="BoardSize"
+                                   Checked="BoardSize_Checked"
+                                   Tag="10"/>
+                    </StackPanel>
+
+                    <!-- Figure Information -->
+                    <StackPanel Grid.Column="1" Margin="20">
+                        <TextBlock Text="Figure Information"
+                                 FontFamily="Old English Text MT"
+                                 FontSize="24"
+                                 Foreground="#FFD700"
+                                 Margin="0,0,0,20"/>
+
+                        <StackPanel Orientation="Horizontal" Margin="0,5">
+                            <Image Source="Resources/farmer-figure-blue.png" Width="30" Height="30"/>
+                            <TextBlock Text="Farmer - Weight: 1" 
+                                     Style="{StaticResource MedievalText}"
+                                     Margin="10,0"/>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal" Margin="0,5">
+                            <Image Source="Resources/horseman-figure-blue.png" Width="30" Height="30"/>
+                            <TextBlock Text="Horseman - Weight: 2" 
+                                     Style="{StaticResource MedievalText}"
+                                     Margin="10,0"/>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal" Margin="0,5">
+                            <Image Source="Resources/knight-figure-blue.png" Width="30" Height="30"/>
+                            <TextBlock Text="Knight - Weight: 3" 
+                                     Style="{StaticResource MedievalText}"
+                                     Margin="10,0"/>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal" Margin="0,5">
+                            <Image Source="Resources/king-figure-blue.png" Width="30" Height="30"/>
+                            <TextBlock Text="King - Weight: 4" 
+                                     Style="{StaticResource MedievalText}"
+                                     Margin="10,0"/>
+                        </StackPanel>
+                    </StackPanel>
+                </Grid>
+
+                <!-- Buttons -->
+                <StackPanel Grid.Row="2" 
+                          Orientation="Horizontal" 
+                          HorizontalAlignment="Center"
+                          Margin="0,20,0,0">
+                    <Button Content="Save" 
+                            Style="{StaticResource MedievalButton}"
+                            Click="Save_Click"/>
+
+                    <Button Content="Return to Menu" 
+                            Style="{StaticResource MedievalButton}"
+                            Click="ReturnToMenu_Click"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>
